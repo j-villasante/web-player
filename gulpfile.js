@@ -31,3 +31,5 @@ gulp.task('browserify', () => {
 	    .pipe(buffer())
 	    .pipe(gulp.dest('./static/dist/js'));
 });
+
+gulp.task('build', ['browserify', 'minify-js']);
