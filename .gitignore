@@ -1,6 +1,7 @@
 static/media
 static/dist
 static/bundle.js
+data
 
 # Created by https://www.gitignore.io/api/node,sublimetext,windows,macos,linux
 
