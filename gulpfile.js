@@ -23,13 +23,13 @@ gulp.task('minify-js', () => {
 
 gulp.task('browserify', () => {
 	const b = browserify({
-		entries: './static/bundle.js'
+		entries: './static/js/script.js'
 	});
 
 	return b.bundle()
 		.pipe(source('bundle.js'))
 	    .pipe(buffer())
-	    .pipe(gulp.dest('./static/dist/js'));
+	    .pipe(gulp.dest('./static'));
 });
 
 gulp.task('build', ['browserify', 'minify-js']);
