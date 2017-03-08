@@ -3,16 +3,26 @@ html
   head
     include includes/head.pug
   body
-    div(class='container')
+    div.container
         include includes/navbar.pug
-        h1 Movies
-        table(class='table table-striped')
-            thead
-                tr
-                    th Name
-            tbody
-                each val in movies
-                    tr
-                        td=val.name
-                        td
-                            a(href='/watch/' + val.path class='btn btn-primary')='Watch'
+        .main-content
+            .row
+                .col-md-6
+                    h1 Movies
+                .col-md-6
+                    button.btn.btn-primary.pull-right#add-movie(type="button" data-toggle="modal" data-target="#add-modal") Add
+            .row
+                table.table.table-striped
+                    thead
+                        tr
+                            th Name
+                    tbody
+                        each val in movies
+                            tr
+                                td
+                                    h5=val.name
+                                td
+                                    button.btn.btn-danger.pull-right.remove-movie(data=val.path)='Remove'
+                                    a.btn.btn-primary.pull-right(href='/watch/' + val.path)='Watch'
+    include includes/modal.pug
+    script(src='/static/bundle.js')

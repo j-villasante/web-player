@@ -1,0 +1,30 @@
+.modal.fade#add-modal(tabindex='-1', role='dialog')
+    .modal-dialog(role='document')
+        .modal-content
+            .modal-header
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') ×
+                h4.modal-title Add movie
+            form#add-movie(method='post' action='/movie/add')
+                .modal-body
+                        .row
+                            .col-md-6
+                                .form-group
+                                    label Path
+                                    input.form-control(type="text" class="form-control" id="add-path" name="path" required)
+                                .form-group
+                                    label Name
+                                    input.form-control(type="text" class="form-control" id="add-name" name="name" required)
+                            .col-md-6
+                                .form-group
+                                    label Video
+                                    input.form-control(type="text" class="form-control" id="add-video" name="video" required)
+                                .form-group
+                                    label Subtitle
+                                    input.form-control(type="text" class="form-control" id="add-subtitle" name="subtitle")
+                .modal-footer
+                    button.btn.btn-default(type='button', data-dismiss='modal') Close
+                    button.btn.btn-primary(type='submit') Save
+        // /.modal-content
+    // /.modal-dialog
+// /.modal

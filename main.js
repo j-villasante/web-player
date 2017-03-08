@@ -1,9 +1,16 @@
 'use strict';
 
 var express = require('express');
-var app = express();
 var auth = require('http-auth');
-var config = require('./list.json');
+var bodyParser = require('body-parser');
+
+var setup = require('./routes');
+
+var controllers = {
+    movies: require('./controllers/movies.js')
+};
+
+var app = express();
 
 var basic = auth.basic({
     realm: "Users",
@@ -12,25 +19,13 @@ var basic = auth.basic({
 
 app.set('view engine', 'pug');
 app.use(auth.connect(basic));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/static', express.static('static'));
+
+setup(app, controllers);
 
 app.get('/logout', function (req, res) {
 	res.status(401).render('logout', {});
-});
-
-app.get('/watch/:movie', function(req, res) {
-    var movie = req.params.movie;
-    for (var i in config.movies) {
-        if (config.movies[i].path === movie){
-            res.render('video', { mediaRoot: config.mediaRoot, movie: config.movies[i] });
-            return;
-        }
-    }
-    res.status('404').send('La pelicula no existe.');
-});
-
-app.get('/', function (req, res) {
-	res.render('index', config);
 });
 
 app.listen(3000, function () {
