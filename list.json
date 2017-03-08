@@ -20,7 +20,8 @@
         {
             "path": "bridgetjones2016",
             "name": "Bridget Jones's Baby",
-            "video": "/Bridget.Jones.2016/Bridget.Jones.Baby.mp4"
+            "video": "/Bridget.Jones.2016/Bridget.Jones.Baby.mp4",
+            "subtitle": "/Bridget.Jones.2016/Bridget.Joness.Baby.2016.vtt"
         }
     ]
 }
