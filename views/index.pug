@@ -1,14 +1,19 @@
 html
   head
-    title= title
-    link(rel='stylesheet', href='/static/css/style.css')
+    title=title
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous')
+    link(rel='stylesheet' href='/static/css/style.css')
   body
-    div(class='video-container')
-        video(id='video' controls preload='metadata')
-            source(src='/static/media/Suicide.Squad.2016.1080p.BluRay.x264-[YTS.AG].mp4')
-            track(label='English' kind='subtitles' srclang='en' src='/static/media/test.vtt')
-
-    div
-        a(href='/logout') Logout
-
-    script(src='static/bundle.js')
+    div(class='container')
+        h1='Peliculas'
+        table(class='table table-striped')
+            thead
+                tr
+                    th='Nombre'
+            tbody
+                each val in movies
+                    tr
+                        td=val.name
+                        td
+                            a(href='/watch/' + val.path class='btn btn-primary')='Ver'

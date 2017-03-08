@@ -3,6 +3,7 @@
 var express = require('express');
 var app = express();
 var auth = require('http-auth');
+var config = require('./list.json');
 
 var basic = auth.basic({
     realm: "Users",
@@ -21,8 +22,19 @@ app.get('/logout', function (req, res) {
 	res.status(401).send('Logout');
 });
 
+app.get('/watch/:movie', function(req, res) {
+    var movie = req.params.movie;
+    for (var i in config.movies) {
+        if (config.movies[i].path === movie){
+            res.render('video', { mediaRoot: config.mediaRoot, movie: config.movies[i] });
+            return;
+        }
+    }
+    res.status('404').send('La pelicula no existe.');
+});
+
 app.get('/', function (req, res) {
-	res.render('index', { title: 'Hey', message: 'Hello there!' });
+	res.render('index', config);
 });
 
 app.listen(3000, function () {
