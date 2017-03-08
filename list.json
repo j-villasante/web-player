@@ -1,0 +1,26 @@
+{
+    "mediaRoot": "/static/media",
+    "movies": [
+        {
+            "path": "suicidesquad",
+            "name": "Suicide Squad",
+            "video": "/SuicideSquad/Suicide.Squad.2016.1080p.BluRay.x264-[YTS.AG].mp4",
+            "subtitle": "/SuicideSquad/suicidesquad.vtt"
+        },
+        {
+            "path": "bridgetjones2001",
+            "name": "Bridget Jones's Diary",
+            "video": "/Bridget.Jones.Diary.2001/Bridget.Jones.Diary.2001.1080p.BluRay.x264-CiNEFiLE.mkv"
+        },
+        {
+            "path": "bridgetjones2004",
+            "name": "Bridget Jones - The Edge of Reason",
+            "video": "/Bridget.Jones.2004/Bridget.Jones.The.Edge.of.Reason.mkv"
+        },
+        {
+            "path": "bridgetjones2016",
+            "name": "Bridget Jones's Baby",
+            "video": "/Bridget.Jones.2016/Bridget.Jones.Baby.mp4"
+        }
+    ]
+}
