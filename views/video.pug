@@ -5,9 +5,12 @@ html
   body
     div(class='video-container')
         video(id='video' controls preload='metadata')
-            source(src=mediaRoot + movie.video)
+            source(src=mediaRoot + movie.video type='video/mp4')
             if movie.subtitle
                 track(label='English' kind='subtitles' srclang='en' src=mediaRoot + movie.subtitle)
 
     div
         a(href='/logout') Logout
+
+    script(src='https://cdn.plyr.io/2.0.11/plyr.js')
+    script plyr.setup();
