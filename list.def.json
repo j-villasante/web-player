@@ -1,0 +1,10 @@
+{
+    "mediaRoot": "/static/media",
+    "movies": [
+        {
+            "path": "bridgetjones2004",
+            "name": "Bridget Jones - The Edge of Reason",
+            "video": "/Bridget.Jones.2004/Bridget.Jones.The.Edge.of.Reason.mkv"
+        }
+    ]
+}
