@@ -1,7 +1,11 @@
 'use strict';
 
 var $ = require('jquery');
+window.$ = window.jQuery = $;
+var plyr = require('plyr');
+require('rangetouch');
+//require('bootstrap');
 
 $(() => {
-	console.log('this is working x2!!');
+	plyr.setup('video');
 });

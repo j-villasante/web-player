@@ -1,4 +1,7 @@
-.video-container video 
-{
-    width: 1000px;
+body {
+	margin-top: 10px;
+}
+
+body {
+	background-color: #ececec;
 }

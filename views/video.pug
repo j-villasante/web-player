@@ -1,18 +1,16 @@
+doctype html
 html
   head
-    title='Movie'
-    meta(name='viewport' content='width=device-width, initial-scale=1')
-    link(rel='stylesheet', href='/static/css/style.css')
+    include includes/head.pug
     link(rel="stylesheet" href="https://cdn.plyr.io/2.0.11/plyr.css")
   body
-    div(class='video-container')
-        video(id='video' controls poster="http://www.hlgjyl888.com/data/wallpapers/57/WDF_1035523.jpg" preload='metadata')
-            source(src=mediaRoot + movie.video type='video/mp4')
-            if movie.subtitle
-                track(label='English' kind='subtitles' srclang='en' src=mediaRoot + movie.subtitle)
+    div(class='container')
+        include includes/navbar.pug
 
-    div
-        a(href='/logout') Logout
+        div(class='video-container')
+            video(id='video' controls preload='metadata')
+                source(src=mediaRoot + movie.video type='video/mp4')
+                if movie.subtitle
+                    track(label='English' kind='subtitles' srclang='en' src=mediaRoot + movie.subtitle)
 
-    script(src='https://cdn.plyr.io/2.0.11/plyr.js')
-    script plyr.setup();
+    script(src='/static/bundle.js')

@@ -14,12 +14,8 @@ app.set('view engine', 'pug');
 app.use(auth.connect(basic));
 app.use('/static', express.static('static'));
 
-app.get('/hello', function (req, res) {
-	res.send('hello');
-});
-
 app.get('/logout', function (req, res) {
-	res.status(401).send('Logout');
+	res.status(401).render('logout', {});
 });
 
 app.get('/watch/:movie', function(req, res) {
