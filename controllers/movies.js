@@ -8,10 +8,10 @@ const listurl = path.join(__dirname, '../data/data.json');
 function add(req, res){
 	var list = require(listurl);
     list.movies.push(req.body);
-    var data = JSON.stringify(list, null, '    ');
+    var data = JSON.stringify(list);
 
     fs.writeFileSync(listurl, data);
-    res.render('index', list);
+    res.redirect('/');
 }
 
 function remove(req, res){
@@ -25,7 +25,7 @@ function remove(req, res){
 
 	if (pos){
 		data.movies.splice(pos, 1);
-		fs.writeFileSync(listurl, JSON.stringify(data, null, '    '));
+		fs.writeFileSync(listurl, JSON.stringify(data));
 		res.render('index', data);
 	}
 	else {

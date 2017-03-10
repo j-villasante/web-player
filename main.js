@@ -7,7 +7,8 @@ var bodyParser = require('body-parser');
 var setup = require('./routes');
 
 var controllers = {
-    movies: require('./controllers/movies.js')
+    movies: require('./controllers/movies.js'),
+    users: require('./controllers/users.js')
 };
 
 var app = express();

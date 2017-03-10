@@ -2,6 +2,7 @@
 	"browser": true,
 	"browserify": true,
 	"globals": {
-		"console": true
+		"console": true,
+		"swal": true
 	}
 }
