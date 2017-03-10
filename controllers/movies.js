@@ -18,8 +18,8 @@ function remove(req, res){
 	var data = require(listurl);
 	var moviePath = req.params.path;
 	var pos;
-	for (var i in data){
-		if (data[i].path === moviePath)
+	for (var i in data.movies){
+		if (data.movies[i].path === moviePath)
 			pos = i;
 	}
 
@@ -29,7 +29,7 @@ function remove(req, res){
 		res.render('index', data);
 	}
 	else {
-		res.status('505').send('The movie you want to remove does not exists.');
+		res.status('404').send('The movie you want to remove does not exists.');
 	}
 }
 

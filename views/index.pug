@@ -22,7 +22,7 @@ html
                                 td
                                     h5=val.name
                                 td
-                                    button.btn.btn-danger.pull-right.remove-movie(data=val.path)='Remove'
+                                    button.btn.btn-danger.pull-right.remove-movie(id='remove-movie-' + val.path data-path=val.path)='Remove'
                                     a.btn.btn-primary.pull-right(href='/watch/' + val.path)='Watch'
     include includes/modal.pug
     script(src='/static/bundle.js')
