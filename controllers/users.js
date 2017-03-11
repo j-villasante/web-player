@@ -4,7 +4,7 @@ var bcrypt = require('bcrypt');
 var LocalStrategy = require('passport-local').Strategy;
 
 function showLogin(req, res) {
-	res.render('login');
+	res.render('login', { errors: req.flash('error') });
 }
 
 function logged(req, res, next) {
@@ -15,9 +15,13 @@ function logged(req, res, next) {
     }
 }
 
-function logout(req, res) {
-    req.logout();
-    res.redirect('/');
+function saveSession(req, res) {
+    req.session.save((err) => {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('/');
+    });
 }
 
 function getLocalStrategy(){
@@ -43,11 +47,11 @@ function login(username, password, done) {
                 return done(null, user);
             }
             else {
-                return done(null, false);
+                return done(null, false, { message: 'Incorrect password or username.' });
             }
         });
     } else {
-        return done(null, false);
+        return done(null, false, { message: 'Incorrect password or username.' });
     }
     
 }
@@ -67,5 +71,5 @@ module.exports = {
     serializeUser: serializeUser,
     deserializeUser: deserializeUser,
     logged: logged,
-    logout: logout
+    saveSession: saveSession
 }

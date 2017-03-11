@@ -5,23 +5,22 @@ function setup(app, controllers){
 
     app.get('/login', controllers.users.showLogin);
 
-    app.post('/login', function(req, res, next) {
-        passport.authenticate('local', function(err, user, info) {
-            if (err) return next(err);
-            if (!user) { return res.redirect('/login'); }
-            req.login(user, function(err) {
-                if (err) { return next(err); }
-                return res.redirect('/');
-            });
-        })(req, res, next);
-    });
+    app.post('/login', 
+        passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), 
+        controllers.users.saveSession);
     
-    app.get('/logout', controllers.users.logout);
+    app.get('/logout',  (req, res, next) => {
+        req.logout();
+        next();
+    },
+    controllers.users.saveSession);
 
-    app.get('/', controllers.users.logged, controllers.movies.renderAll);
-    app.get('/watch/:movie', controllers.users.logged, controllers.movies.watch);
-    app.post('/movie/add', controllers.users.logged, controllers.movies.add);
-    app.delete('/movie/remove/:path', controllers.users.logged, controllers.movies.remove);
+    app.use(controllers.users.logged);
+
+    app.get('/', controllers.movies.renderAll);
+    app.get('/watch/:movie', controllers.movies.watch);
+    app.post('/movie/add', controllers.movies.add);
+    app.delete('/movie/remove/:path', controllers.movies.remove);
 }
 
 module.exports = setup;

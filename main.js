@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var flash = require('connect-flash');
 
 var setup = require('./routes');
 
@@ -29,6 +30,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
+app.use(flash());
 passport.serializeUser(controllers.users.serializeUser);
 passport.deserializeUser(controllers.users.deserializeUser);  
 passport.use(strategy);
