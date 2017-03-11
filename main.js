@@ -17,17 +17,17 @@ var controllers = {
 var app = express();
 
 app.set('view engine', 'pug');
+
 app.use('/static', express.static('static'));
 
 var strategy = controllers.users.getLocalStrategy();
 
-app.use(cookieParser('keyboard cat'));
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
     secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false, maxAge: 86400000 }
+    resave: true,
+    saveUninitialized: true
 }));
 passport.serializeUser(controllers.users.serializeUser);
 passport.deserializeUser(controllers.users.deserializeUser);  
