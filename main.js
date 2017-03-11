@@ -1,36 +1,42 @@
 'use strict';
 
 var express = require('express');
-var auth = require('http-auth');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 
 var setup = require('./routes');
 
 var controllers = {
     movies: require('./controllers/movies.js'),
-    users: require('./controllers/users.js')
+    users: require('./controllers/users.js'),
+    passport: passport
 };
 
 var app = express();
 
-var basic = auth.basic({
-    realm: "Users",
-    file: __dirname + "/data/users.htpasswd"
-});
-
 app.set('view engine', 'pug');
-app.use(auth.connect(basic));
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/static', express.static('static'));
 
-setup(app, controllers);
+var strategy = controllers.users.getLocalStrategy();
 
-app.get('/logout', function (req, res) {
-	res.status(401).render('logout', {});
-});
+app.use(cookieParser('keyboard cat'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false, maxAge: 86400000 }
+}));
+passport.serializeUser(controllers.users.serializeUser);
+passport.deserializeUser(controllers.users.deserializeUser);  
+passport.use(strategy);
+app.use(passport.initialize());
+app.use(passport.session());
+
+setup(app, controllers);
 
 app.listen(3000, function () {
 	console.log('Server is listening on port 3000!');
 });
-
-
