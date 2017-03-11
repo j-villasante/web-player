@@ -8,7 +8,9 @@ require('bootstrap');
 require('sweetalert');
 
 $(() => {
-	plyr.setup('video');
+	plyr.setup('video', {
+        enabled: !(/webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent))
+    });
 
     $('.remove-movie').click((event) => {
         var but = $('#' + event.target.id);
