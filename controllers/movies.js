@@ -38,7 +38,7 @@ function watch(req, res) {
     var movies = list.movies;
     var movie = req.params.movie;
     for (var i in movies) {
-        if (movies[i].path === movie){
+        if (movies[i].path.toUpperCase() === movie.toUpperCase()){
             res.render('video', { mediaRoot: list.mediaRoot, movie: movies[i] });
             return;
         }
