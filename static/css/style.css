@@ -1,8 +1,10 @@
-body {
-	margin-top: 10px;
+video {
+    height: auto;
+    width: 100%;
 }
 
 body {
+	margin-top: 10px;
 	background-color: #ececec;
 }
 
