@@ -24,7 +24,7 @@ $(() => {
 
         swal({
             title: 'Confirmation',
-            text: 'Are you sure you want to delete the movie!',
+            text: 'Are you sure you want to delete the movie?',
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#DD6B55',

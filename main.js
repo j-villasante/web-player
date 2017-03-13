@@ -39,6 +39,6 @@ app.use(passport.session());
 
 setup(app, controllers);
 
-app.listen(3000, function () {
+app.listen(3000, () => {
 	console.log('Server is listening on port 3000!');
 });

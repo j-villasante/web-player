@@ -15,11 +15,9 @@ function logged(req, res, next) {
     }
 }
 
-function saveSession(req, res) {
+function saveSession(req, res, next) {
     req.session.save((err) => {
-        if (err) {
-            return next(err);
-        }
+        if (err) next(err);
         res.redirect('/');
     });
 }
