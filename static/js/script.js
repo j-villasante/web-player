@@ -24,11 +24,11 @@ $(() => {
 
         swal({
             title: 'Confirmation',
-            text: 'Are you sure you want to delete the file!',
+            text: 'Are you sure you want to delete the movie!',
             type: 'warning',
             showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, remove it!",
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'Yes, remove it!',
             closeOnConfirm: false,
             showLoaderOnConfirm: true,
         },
@@ -39,7 +39,7 @@ $(() => {
                     {
                         title: 'The movie was removed!'
                     }, () => {
-                    location.reload();
+                        window.location.replace('/');
                 });
             });
         });

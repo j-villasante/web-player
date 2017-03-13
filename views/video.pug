@@ -3,6 +3,7 @@ html
   head
     include includes/head.pug
     link(rel="stylesheet" href="https://cdn.plyr.io/2.0.11/plyr.css")
+    link(rel="stylesheet" href="/static/css/sweetalert.css")
   body
     div(class='container')
         include includes/navbar.pug
@@ -12,5 +13,8 @@ html
                 source(src=mediaRoot + movie.video type='video/mp4')
                 if movie.subtitle
                     track(label='English' kind='subtitles' srclang='en' src=mediaRoot + movie.subtitle)
+
+        div
+            button.btn.btn-danger.pull-right.remove-movie(id='remove-movie-' + movie.path data-path=movie.path)='Remove'
 
     script(src='/static/bundle.js')
