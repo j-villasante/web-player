@@ -2,12 +2,18 @@
 
 const fs = require('fs');
 const path = require('path');
+const uuid = require('uuid');
 
 const listurl = path.join(__dirname, '../data/data.json');
 
 function add(req, res){
 	var list = require(listurl);
-    list.movies.push(req.body);
+	var newMovie = req.body;
+	console.log(newMovie);
+	newMovie.path = uuid.v4();
+	console.log(newMovie);
+
+    list.movies.push(newMovie);
     var data = JSON.stringify(list);
 
     fs.writeFileSync(listurl, data);
@@ -37,6 +43,7 @@ function watch(req, res) {
 	var list = require(listurl);
     var movies = list.movies;
     var movie = req.params.movie;
+
     for (var i in movies) {
         if (movies[i].path.toUpperCase() === movie.toUpperCase()){
             res.render('video', { mediaRoot: list.mediaRoot, movie: movies[i] });

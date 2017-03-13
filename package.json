@@ -18,7 +18,8 @@
     "plyr": "^2.0.11",
     "pug": "^2.0.0-beta11",
     "rangetouch": "0.0.9",
-    "sweetalert": "^1.1.3"
+    "sweetalert": "^1.1.3",
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.22.0",
