@@ -11,13 +11,22 @@ const writeFile = Promise.promisify(fs.writeFile);
 
 const dataurl = path.join(__dirname, '../data/data.json');
 
+function showFoundFiles(req, res) {
+	var structure = {};
+	try {
+		getAllFiles(req.query.location, structure);
+		res.json(structure);
+	}
+	catch(err){
+		res.json({ err : err.message });
+	}
+}
+
 function doImport (req, res) {
 	var location = req.body.location;
 
 	var structure = {};
 	getAllFiles(location, structure);
-
-	console.log(JSON.stringify(structure, null, '    '));
 
 	var result = moveFiles(structure);
 
@@ -111,5 +120,6 @@ function moveFiles(structure){
 }
 
 module.exports = {
-	doImport: doImport
+	doImport: doImport,
+	showFoundFiles: showFoundFiles
 };

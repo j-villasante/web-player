@@ -12,7 +12,7 @@ html
                     h1 Movies
                 .col-md-6
                     button.btn.btn-primary.pull-right#add-movie(type="button" data-toggle="modal" data-target="#add-modal") Add
-                    button.btn.btn-primary.pull-right#import-movies(type="button" data-toggle="modal" data-target="#import-modal") Import
+                    button.btn.btn-primary.pull-right(type="button" data-toggle="modal" data-target="#import-modal") Import
             .row
                 table.table.table-striped
                     thead
@@ -25,6 +25,6 @@ html
                                     h5=val.name
                                 td
                                     a.btn.btn-primary.pull-right(href='/watch/' + val.path)='Watch'
-    include includes/modal.pug
+    include includes/new-movie.pug
     include includes/import.pug
     script(src='/static/bundle.js')

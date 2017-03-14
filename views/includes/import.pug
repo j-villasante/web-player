@@ -12,9 +12,11 @@
                                 .form-group
                                     label Location
                                     input.form-control(type='text' class='form-control' id='import-location' name='location' value='/Users/Josue/Desktop/media' required)
+                            .col-md-12#import-body
                 .modal-footer
                     button.btn.btn-default(type='button', data-dismiss='modal') Close
-                    button.btn.btn-primary(type='submit') Save
+                    button.btn.btn-info#get-movies(type='button') Find
+                    button.btn.btn-primary.hidden#import-movies(type='submit') Import
         // /.modal-content
     // /.modal-dialog
 // /.modal

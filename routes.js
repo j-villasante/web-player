@@ -23,6 +23,7 @@ function setup(app, controllers){
     app.delete('/movie/remove/:path', controllers.movies.remove);
 
     app.post('/import', controllers.importer.doImport);
+    app.get('/import', controllers.importer.showFoundFiles);
 }
 
 module.exports = setup;
