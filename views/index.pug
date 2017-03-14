@@ -13,6 +13,7 @@ html
                 .col-md-6
                     button.btn.btn-primary.pull-right#add-movie(type="button" data-toggle="modal" data-target="#add-modal") Add
                     button.btn.btn-primary.pull-right(type="button" data-toggle="modal" data-target="#import-modal") Import
+                    button.btn.btn-primary.pull-right(type="button" data-toggle="modal" data-target="#upload-modal") Upload
             .row
                 table.table.table-striped
                     thead
@@ -26,5 +27,6 @@ html
                                 td
                                     a.btn.btn-primary.pull-right(href='/watch/' + val.path)='Watch'
     include includes/new-movie.pug
+    include includes/upload.pug
     include includes/import.pug
     script(src='/static/bundle.js')
