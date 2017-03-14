@@ -69,7 +69,7 @@ gulp.task('browser-sync', () => {
 	browserSync.init({
 		proxy: 'localhost:3000',
 		port: 3001,
-		reloadDelay: 500,
+		reloadDelay: 1000,
 		ui: {
 			port: 3002
 		},

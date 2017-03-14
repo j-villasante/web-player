@@ -5,6 +5,7 @@
   "main": "main.js",
   "dependencies": {
     "bcrypt": "^1.0.2",
+    "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "bootstrap": "^3.3.7",
     "connect-flash": "^0.1.1",
@@ -18,6 +19,7 @@
     "plyr": "^2.0.11",
     "pug": "^2.0.0-beta11",
     "rangetouch": "0.0.9",
+    "srt-to-vtt": "^1.1.1",
     "sweetalert": "^1.1.3",
     "uuid": "^3.0.1"
   },

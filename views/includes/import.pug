@@ -1,0 +1,20 @@
+.modal.fade#import-modal(tabindex='-1', role='dialog')
+    .modal-dialog.modal-sm(role='document')
+        .modal-content
+            .modal-header
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') ×
+                h4.modal-title Import
+            form#add-movie(method='post' action='/import')
+                .modal-body
+                        .row
+                            .col-md-12
+                                .form-group
+                                    label Location
+                                    input.form-control(placeholder='/some/example' type='text' class='form-control' id='import-location' name='location' value='/Users/Josue/Documents/landmarker-web/app' required)
+                .modal-footer
+                    button.btn.btn-default(type='button', data-dismiss='modal') Close
+                    button.btn.btn-primary(type='submit') Save
+        // /.modal-content
+    // /.modal-dialog
+// /.modal

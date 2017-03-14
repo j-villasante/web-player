@@ -1,6 +1,7 @@
 {
-	"browser": true,
+	"browser": false,
 	"browserify": true,
+	"esnext": true,
 	"globals": {
 		"console": true,
 		"swal": true

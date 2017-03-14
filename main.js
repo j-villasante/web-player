@@ -12,6 +12,7 @@ var setup = require('./routes');
 var controllers = {
     movies: require('./controllers/movies.js'),
     users: require('./controllers/users.js'),
+    importer: require('./controllers/importer.js'),
     passport: passport
 };
 
