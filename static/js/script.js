@@ -79,4 +79,50 @@ $(() => {
             $('#get-movies').prop('disabled', false);
         });
     });
+
+    $('.upload-btn').click(() => {
+        $('#upload-input').click();
+        $('.progress-bar').text('0%');
+        $('.progress-bar').width('0%');
+    });
+
+    $('#upload-input').change(() => {
+        var files = $('#upload-input').get(0).files;
+
+        if (files.length > 0) {
+            var formData = new FormData();
+
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                formData.append('uploads', file, file.name);
+            }
+
+            $.ajax({
+                url: '/upload',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: (data) => {
+                    console.log(data);
+                },
+                xhr: () => {
+                    var xhr = new XMLHttpRequest();
+                    xhr.upload.addEventListener('progress', (evt) => {
+                        if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+
+                            $('.progress-bar').text(percentComplete + '%');
+                            $('.progress-bar').width(percentComplete + '%');
+
+                            if (percentComplete === 100) 
+                                $('.progress-bar').html('Done');
+                        }
+                    }, false);
+                    return xhr;
+                }
+            });
+        }
+    });
 });

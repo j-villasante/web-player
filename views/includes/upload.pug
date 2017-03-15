@@ -5,16 +5,15 @@
                 button.close(type='button', data-dismiss='modal', aria-label='Close')
                     span(aria-hidden='true') ×
                 h4.modal-title Upload
-            form(method='post' action='/upload' enctype="multipart/form-data")
-                .modal-body
-                        .row
-                            .col-md-12
-                                .form-group
-                                    label.btn.btn-primary.btn-file.center-block Upload
-                                        input.hidden(type='file' name='file-upload')
-                .modal-footer
-                    button.btn.btn-default(type='button', data-dismiss='modal') Close
-                    button.btn.btn-primary.hidden#upload-movies(type='submit') Upload
+            .modal-body
+                .row
+                    .col-xs-12
+                        .progress
+                            .progress-bar(role='progressbar')
+                        button.btn.btn-lg.upload-btn(type='button') Upload File
+                        input#upload-input.hidden(type='file', name='uploads[]', multiple='multiple')
+            .modal-footer
+                button.btn.btn-default(type='button', data-dismiss='modal') Close
         // /.modal-content
     // /.modal-dialog
 // /.modal

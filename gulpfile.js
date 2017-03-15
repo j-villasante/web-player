@@ -9,6 +9,7 @@ const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
 const sourcemaps = require('gulp-sourcemaps');
 const nodemon = require('gulp-nodemon');
+const gutil = require('gulp-util');
 const browserSync = require('browser-sync').create();
 
 gulp.task('minify-js', ['browserify'], () => {
@@ -31,6 +32,7 @@ gulp.task('browserify', (cb) => {
 	});
 
 	return b.bundle()
+		.on('error', gutil.log)
 		.pipe(source('bundle.js'))
 	    .pipe(buffer())
 	    .pipe(sourcemaps.init({

@@ -13,6 +13,7 @@ var controllers = {
     movies: require('./controllers/movies.js'),
     users: require('./controllers/users.js'),
     importer: require('./controllers/importer.js'),
+    upload: require('./controllers/upload.js'),
     passport: passport
 };
 
