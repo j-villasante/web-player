@@ -14,7 +14,9 @@ function recieveMovie(req, res) {
 	fs.mkdirSync(newFolder);
 	form.uploadDir = newFolder;
 
-	form.on('file', (field, file) => {
+	form.on('file', (name, file) => {
+		console.log(name);
+		console.log(JSON.stringify(file, null, '    '));
 		fs.rename(file.path, path.join(form.uploadDir, file.name));
 	});
 
