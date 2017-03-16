@@ -93,59 +93,65 @@ $(() => {
     });
 
     $('#submit-movie').click(() => {
-        var files = $('#upload-movie-input').get(0).files;
-        if (files.length > 0) {
-        }
+        var movieFile = $('#upload-movie-input').get(0).files;
+        var subtitleFile = $('#upload-subtitle-input').get(0).files;
 
-        $.ajax({
-            url: '/upload',
-            type: 'POST',
-            data: {
-                name: $('#movie-title-input').val()
-            },
-            success: (data) => {
-                console.log(data);
-            }
-        });
-    });
+        var info = {
+            name: $('#movie-title-input').val()
+        };
 
-    function uploadSubtitle(id) {
-        var files = $('#upload-subtitle-input').get(0).files;
-        if (files.length > 0) {
-            var formData = new FormData();
+        if (subtitleFile.length > 0) 
+            info.subtitle = true;
 
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                formData.append('subtitle', file, file.name);
-            }
-
+        if (info.name && movieFile.length > 0) {
             $.ajax({
-                url: '/upload/subtitle/' + id,
+                url: '/upload',
                 type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
+                data: info,
                 success: (data) => {
                     console.log(data);
-                },
-                xhr: () => {
-                    var xhr = new XMLHttpRequest();
-                    xhr.upload.addEventListener('progress', (evt) => {
-                        if (evt.lengthComputable) {
-                            var percentComplete = evt.loaded / evt.total;
-                            percentComplete = parseInt(percentComplete * 100);
-
-                            $('#subtitles-progress-bar').text(percentComplete + '%');
-                            $('#subtitles-progress-bar').width(percentComplete + '%');
-
-                            if (percentComplete === 100) 
-                                $('#subtitles-progress-bar').html('Done');
-                        }
-                    }, false);
-                    return xhr;
                 }
             });
         }
+        else {
+            console.log('missing movie or movie title');
+        }
+    });
+
+    function uploadSubtitle(id) {        
+        var formData = new FormData();
+
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            formData.append('subtitle', file, file.name);
+        }
+
+        $.ajax({
+            url: '/upload/subtitle/' + id,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: (data) => {
+                console.log(data);
+            },
+            xhr: () => {
+                var xhr = new XMLHttpRequest();
+                xhr.upload.addEventListener('progress', (evt) => {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+
+                        $('#subtitles-progress-bar').text(percentComplete + '%');
+                        $('#subtitles-progress-bar').width(percentComplete + '%');
+
+                        if (percentComplete === 100) 
+                            $('#subtitles-progress-bar').html('Done');
+                    }
+                }, false);
+                return xhr;
+            }
+        });
     }
 
     function uploadMovie(id) {
