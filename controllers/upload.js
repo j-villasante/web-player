@@ -21,7 +21,7 @@ function createMovie(req, res) {
 
         var data = require(dataurl);
         data.movies.push(movie);
-        fs.writeFileSync(dataurl, JSON.stringify(data, null, '    '));
+        fs.writeFileSync(dataurl, JSON.stringify(data));
         res.json({ id: id });
     });
 }
