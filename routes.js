@@ -15,12 +15,12 @@ function setup(app, controllers){
     },
     controllers.users.saveSession);
 
-    app.use(controllers.users.logged);
+    //app.use(controllers.users.logged);
 
     app.get('/', controllers.movies.renderAll);
     app.get('/watch/:movie', controllers.movies.watch);
     app.post('/movie/add', controllers.movies.add);
-    app.delete('/movie/remove/:path', controllers.movies.remove);
+    app.delete('/movie/remove/:path', controllers.movies.removeMovieFiles, controllers.movies.remove);
 
     app.post('/import', controllers.importer.doImport);
     app.get('/import', controllers.importer.showFoundFiles);

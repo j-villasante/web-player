@@ -3,15 +3,14 @@
 const fs = require('fs');
 const path = require('path');
 const uuid = require('uuid');
+const rimraf = require('rimraf');
 
 const listurl = path.join(__dirname, '../data/data.json');
 
 function add(req, res){
 	var list = require(listurl);
 	var newMovie = req.body;
-	console.log(newMovie);
 	newMovie.path = uuid.v4();
-	console.log(newMovie);
 
     list.movies.push(newMovie);
     var data = JSON.stringify(list);
@@ -39,6 +38,22 @@ function remove(req, res){
 	}
 }
 
+function removeMovieFiles(req, res, next) {
+	if (req.body.files) {
+		rimraf(path.join(__dirname, '../static/media/') + req.params.path, (err) => {
+			if (err){
+				res.json({ err: err.message });
+			}
+			else{
+				next();				
+			} 
+		});
+	}
+	else {
+		next();
+	}
+}
+
 function watch(req, res) {
 	var list = require(listurl);
     var movies = list.movies;
@@ -61,5 +76,6 @@ module.exports = {
 	add: add,
 	renderAll: renderAll,
 	watch: watch,
-	remove: remove
+	remove: remove,
+	removeMovieFiles: removeMovieFiles
 };

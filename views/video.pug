@@ -8,13 +8,23 @@ html
     div(class='container')
         include includes/navbar.pug
 
-        div(class='video-container')
+        .video-container
             video(id='video' controls preload='metadata')
                 source(src=mediaRoot + movie.video type='video/mp4')
                 if movie.subtitle
                     track(label='English' kind='subtitles' srclang='en' src=mediaRoot + movie.subtitle)
 
-        div
-            button.btn.btn-danger.pull-right.remove-movie(id='remove-movie-' + movie.path data-path=movie.path)='Remove'
+        .col-md-3#delete-panel
+            .panel.panel-danger
+                .panel-heading DELETE THIS MOVIE
+                .panel-body
+                    .row
+                        .col-md-12
+                            label
+                                input#chbx-delete-files(type='checkbox') 
+                                |  Delete files too?
+                    .row
+                        .col-md-12
+                            button.btn.btn-danger.remove-movie(id='remove-movie-' + movie.path data-path=movie.path) Delete            
 
     script(src='/static/bundle.js')

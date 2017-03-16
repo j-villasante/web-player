@@ -20,3 +20,7 @@ body {
 .remove-movie {
     margin-top: 10px;
 }
+
+#delete-panel {
+	margin-top: 10px;
+}

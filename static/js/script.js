@@ -22,9 +22,11 @@ $(() => {
             'method': 'DELETE'
         };
 
+        if ($('#chbx-delete-files').is(':checked')) settings.data = { files: true };
+
         swal({
             title: 'Confirmation',
-            text: 'Are you sure you want to delete the movie?',
+            text: 'Are you sure you want to remove the movie?',
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#DD6B55',
