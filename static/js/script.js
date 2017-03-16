@@ -80,25 +80,47 @@ $(() => {
         });
     });
 
-    $('.upload-btn').click(() => {
-        $('#upload-input').click();
+    $('.upload-movie-btn').click(() => {
+        $('#upload-movie-input').click();
         $('.progress-bar').text('0%');
         $('.progress-bar').width('0%');
     });
 
-    $('#upload-input').change(() => {
-        var files = $('#upload-input').get(0).files;
+    $('.upload-subtitle-btn').click(() => {
+        $('#upload-subtitle-input').click();
+        $('.progress-bar').text('0%');
+        $('.progress-bar').width('0%');
+    });
 
+    $('#submit-movie').click(() => {
+        var files = $('#upload-movie-input').get(0).files;
+        if (files.length > 0) {
+        }
+
+        $.ajax({
+            url: '/upload',
+            type: 'POST',
+            data: {
+                name: $('#movie-title-input').val()
+            },
+            success: (data) => {
+                console.log(data);
+            }
+        });
+    });
+
+    function uploadSubtitle(id) {
+        var files = $('#upload-subtitle-input').get(0).files;
         if (files.length > 0) {
             var formData = new FormData();
 
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
-                formData.append('uploads', file, file.name);
+                formData.append('subtitle', file, file.name);
             }
 
             $.ajax({
-                url: '/upload',
+                url: '/upload/subtitle/' + id,
                 type: 'POST',
                 data: formData,
                 processData: false,
@@ -113,16 +135,52 @@ $(() => {
                             var percentComplete = evt.loaded / evt.total;
                             percentComplete = parseInt(percentComplete * 100);
 
-                            $('.progress-bar').text(percentComplete + '%');
-                            $('.progress-bar').width(percentComplete + '%');
+                            $('#subtitles-progress-bar').text(percentComplete + '%');
+                            $('#subtitles-progress-bar').width(percentComplete + '%');
 
                             if (percentComplete === 100) 
-                                $('.progress-bar').html('Done');
+                                $('#subtitles-progress-bar').html('Done');
                         }
                     }, false);
                     return xhr;
                 }
             });
         }
-    });
+    }
+
+    function uploadMovie(id) {
+        var formData = new FormData();
+
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            formData.append('movie', file, file.name);
+        }
+
+        $.ajax({
+            url: '/upload/movie/' + id,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: (data) => {
+                console.log(data);
+            },
+            xhr: () => {
+                var xhr = new XMLHttpRequest();
+                xhr.upload.addEventListener('progress', (evt) => {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+
+                        $('#movie-progress-bar').text(percentComplete + '%');
+                        $('#movie-progress-bar').width(percentComplete + '%');
+
+                        if (percentComplete === 100) 
+                            $('#movie-progress-bar').html('Done');
+                    }
+                }, false);
+                return xhr;
+            }
+        });
+    }
 });

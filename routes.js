@@ -25,7 +25,8 @@ function setup(app, controllers){
     app.post('/import', controllers.importer.doImport);
     app.get('/import', controllers.importer.showFoundFiles);
 
-    app.post('/upload', controllers.upload.recieveMovie);
+    app.post('/upload', controllers.upload.createMovie);
+    app.post('/upload/movie/:id', controllers.upload.recieveMovie);
 }
 
 module.exports = setup;
