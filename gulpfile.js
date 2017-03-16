@@ -42,7 +42,7 @@ gulp.task('browserify', (cb) => {
 	    .pipe(gulp.dest('./static'));
 });
 
-gulp.task('default', ['nodemon', 'browser-sync', 'watchers']);
+gulp.task('default', ['nodemon', 'browser-sync', 'watchers', 'browserify']);
 
 gulp.task('watchers', () => {
 	gulp.watch('./static/js/*', ['browserify'], () => {

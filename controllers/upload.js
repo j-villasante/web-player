@@ -26,25 +26,30 @@ function createMovie(req, res) {
     });
 }
 
-function recieveMovie(req, res) {
+function recieveMediaFile(req, res) {
 	var form = new formidable.IncomingForm();
 	form.multiples = false;
 
 	var id = req.params.id;
-	var newFolder = path.join(__dirname, '../static/media/', id);
-    
-	form.uploadDir = newFolder;
+
+	form.uploadDir = path.join(__dirname, '../static/media/', id);
 
 	form.on('file', (name, file) => {
-		fs.rename(file.path, path.join(form.uploadDir, file.name));
+        var ext = path.extname(file.name);
+        if (ext === '.mp4'){
+            fs.rename(file.path, path.join(form.uploadDir, 'movie.mp4'));
+        }
+        else if (ext === '.vtt') {
+            fs.rename(file.path, path.join(form.uploadDir, 'subtitle.vtt'));
+        }
 	});
 
 	form.on('error', function(err) {
-    	console.log('An error has occured: \n' + err);
+    	res.json({ err: err.message });
   	});
 
   	form.on('end', function() {
-	    res.end('success');
+	    res.json({ mes: 'ok'});
   	});
 
   	form.parse(req);
@@ -52,5 +57,5 @@ function recieveMovie(req, res) {
 
 module.exports = {
     createMovie: createMovie,
-	recieveMovie: recieveMovie
+	recieveMediaFile: recieveMediaFile
 };

@@ -80,6 +80,15 @@ $(() => {
         });
     });
 
+    $('#upload-movie-input').change(() => {
+        $('#movie-file-url').text($('#upload-movie-input')[0].files[0].name);
+    }); 
+
+
+    $('#upload-subtitle-input').change(() => {
+        $('#subtitle-file-url').text($('#upload-subtitle-input')[0].files[0].name);
+    }); 
+
     $('.upload-movie-btn').click(() => {
         $('#upload-movie-input').click();
         $('.progress-bar').text('0%');
@@ -103,38 +112,69 @@ $(() => {
         if (subtitleFile.length > 0) 
             info.subtitle = true;
 
-        if (info.name && movieFile.length > 0) {
+        if (info.name && info.name !== '' && movieFile.length > 0) {
             $.ajax({
                 url: '/upload',
                 type: 'POST',
                 data: info,
                 success: (data) => {
-                    console.log(data);
+                    var resp = [];
+
+                    function cb(data){
+                        if (resp.length === 1 || !info.subtitle){
+                            resp.push(data);
+                            
+                            if (resp.length === 2 && !resp[0].err && !resp[1].err)
+                                location.reload();
+
+                            if (resp.length === 1 && !resp[0].err)
+                                location.reload();
+                        }
+                        else {
+                            resp.push(data);
+                        }   
+                    }
+
+                    var movieOptions = {
+                        inputId: '#upload-movie-input',
+                        name: 'movie',
+                        id: data.id,
+                        progressbarId: '#movie-progress-bar'
+                    };
+                    uploadMedia(movieOptions, cb);
+
+                    if (info.subtitle) {
+                        var subtitleOptions = {
+                            inputId: '#upload-subtitle-input',
+                            name: 'subtitle',
+                            id: data.id,
+                            progressbarId: '#subtitles-progress-bar'
+                        };
+                        uploadMedia(subtitleOptions, cb);
+                    }                    
                 }
             });
         }
         else {
-            console.log('missing movie or movie title');
+            $('#upload-error').text('Missing movie or movie title');
         }
     });
 
-    function uploadSubtitle(id) {        
+    function uploadMedia(options, cb){
         var formData = new FormData();
-
+        var files = $(options.inputId).get(0).files;
         for (var i = 0; i < files.length; i++) {
             var file = files[i];
-            formData.append('subtitle', file, file.name);
+            formData.append(options.name, file, file.name);
         }
 
         $.ajax({
-            url: '/upload/subtitle/' + id,
+            url: '/upload/media/' + options.id,
             type: 'POST',
             data: formData,
             processData: false,
             contentType: false,
-            success: (data) => {
-                console.log(data);
-            },
+            success: cb,
             xhr: () => {
                 var xhr = new XMLHttpRequest();
                 xhr.upload.addEventListener('progress', (evt) => {
@@ -142,47 +182,12 @@ $(() => {
                         var percentComplete = evt.loaded / evt.total;
                         percentComplete = parseInt(percentComplete * 100);
 
-                        $('#subtitles-progress-bar').text(percentComplete + '%');
-                        $('#subtitles-progress-bar').width(percentComplete + '%');
+                        var progressbar = $(options.progressbarId);
+                        progressbar.text(percentComplete + '%');
+                        progressbar.width(percentComplete + '%');
 
                         if (percentComplete === 100) 
-                            $('#subtitles-progress-bar').html('Done');
-                    }
-                }, false);
-                return xhr;
-            }
-        });
-    }
-
-    function uploadMovie(id) {
-        var formData = new FormData();
-
-        for (var i = 0; i < files.length; i++) {
-            var file = files[i];
-            formData.append('movie', file, file.name);
-        }
-
-        $.ajax({
-            url: '/upload/movie/' + id,
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: (data) => {
-                console.log(data);
-            },
-            xhr: () => {
-                var xhr = new XMLHttpRequest();
-                xhr.upload.addEventListener('progress', (evt) => {
-                    if (evt.lengthComputable) {
-                        var percentComplete = evt.loaded / evt.total;
-                        percentComplete = parseInt(percentComplete * 100);
-
-                        $('#movie-progress-bar').text(percentComplete + '%');
-                        $('#movie-progress-bar').width(percentComplete + '%');
-
-                        if (percentComplete === 100) 
-                            $('#movie-progress-bar').html('Done');
+                            progressbar.html('Done');
                     }
                 }, false);
                 return xhr;

@@ -15,7 +15,7 @@ function setup(app, controllers){
     },
     controllers.users.saveSession);
 
-    //app.use(controllers.users.logged);
+    app.use(controllers.users.logged);
 
     app.get('/', controllers.movies.renderAll);
     app.get('/watch/:movie', controllers.movies.watch);
@@ -26,7 +26,7 @@ function setup(app, controllers){
     app.get('/import', controllers.importer.showFoundFiles);
 
     app.post('/upload', controllers.upload.createMovie);
-    app.post('/upload/movie/:id', controllers.upload.recieveMovie);
+    app.post('/upload/media/:id', controllers.upload.recieveMediaFile);
 }
 
 module.exports = setup;

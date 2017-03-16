@@ -16,23 +16,30 @@
                     .col-xs-12 
                         label Movie
                 .row
+                    .col-xs-12#movie-file-url
+                .row                    
                     .col-xs-8
                         .progress
                             .progress-bar#movie-progress-bar(role='progressbar')
                     .col-xs-4
                         button.btn.btn-primary.upload-movie-btn.btn.pull-right(type='button') Browse
-                        input#upload-movie-input.hidden(type='file')
+                        input#upload-movie-input.hidden(type='file' accept='.mp4')
 
                 .row 
                     .col-xs-12 
                         label Subtitle
+                .row
+                    .col-xs-12#subtitle-file-url
                 .row
                     .col-xs-8
                         .progress
                             .progress-bar#subtitles-progress-bar(role='progressbar')
                     .col-xs-4
                         button.btn.btn-primary.upload-subtitle-btn.btn.pull-right(type='button') Browse
-                        input#upload-subtitle-input.hidden(type='file')
+                        input#upload-subtitle-input.hidden(type='file' accept='.vtt')
+                .row
+                    .col-xs-12
+                        p.text-danger#upload-error
 
             .modal-footer
                 button.btn.btn-default(type='button', data-dismiss='modal') Close
