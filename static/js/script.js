@@ -80,49 +80,113 @@ $(() => {
         });
     });
 
-    $('.upload-btn').click(() => {
-        $('#upload-input').click();
+    $('.upload-movie-btn').click(() => {
+        $('#upload-movie-input').click();
         $('.progress-bar').text('0%');
         $('.progress-bar').width('0%');
     });
 
-    $('#upload-input').change(() => {
-        var files = $('#upload-input').get(0).files;
+    $('.upload-subtitle-btn').click(() => {
+        $('#upload-subtitle-input').click();
+        $('.progress-bar').text('0%');
+        $('.progress-bar').width('0%');
+    });
 
-        if (files.length > 0) {
-            var formData = new FormData();
+    $('#submit-movie').click(() => {
+        var movieFile = $('#upload-movie-input').get(0).files;
+        var subtitleFile = $('#upload-subtitle-input').get(0).files;
 
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                formData.append('uploads', file, file.name);
-            }
+        var info = {
+            name: $('#movie-title-input').val()
+        };
 
+        if (subtitleFile.length > 0) 
+            info.subtitle = true;
+
+        if (info.name && movieFile.length > 0) {
             $.ajax({
                 url: '/upload',
                 type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
+                data: info,
                 success: (data) => {
                     console.log(data);
-                },
-                xhr: () => {
-                    var xhr = new XMLHttpRequest();
-                    xhr.upload.addEventListener('progress', (evt) => {
-                        if (evt.lengthComputable) {
-                            var percentComplete = evt.loaded / evt.total;
-                            percentComplete = parseInt(percentComplete * 100);
-
-                            $('.progress-bar').text(percentComplete + '%');
-                            $('.progress-bar').width(percentComplete + '%');
-
-                            if (percentComplete === 100) 
-                                $('.progress-bar').html('Done');
-                        }
-                    }, false);
-                    return xhr;
                 }
             });
         }
+        else {
+            console.log('missing movie or movie title');
+        }
     });
+
+    function uploadSubtitle(id) {        
+        var formData = new FormData();
+
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            formData.append('subtitle', file, file.name);
+        }
+
+        $.ajax({
+            url: '/upload/subtitle/' + id,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: (data) => {
+                console.log(data);
+            },
+            xhr: () => {
+                var xhr = new XMLHttpRequest();
+                xhr.upload.addEventListener('progress', (evt) => {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+
+                        $('#subtitles-progress-bar').text(percentComplete + '%');
+                        $('#subtitles-progress-bar').width(percentComplete + '%');
+
+                        if (percentComplete === 100) 
+                            $('#subtitles-progress-bar').html('Done');
+                    }
+                }, false);
+                return xhr;
+            }
+        });
+    }
+
+    function uploadMovie(id) {
+        var formData = new FormData();
+
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            formData.append('movie', file, file.name);
+        }
+
+        $.ajax({
+            url: '/upload/movie/' + id,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: (data) => {
+                console.log(data);
+            },
+            xhr: () => {
+                var xhr = new XMLHttpRequest();
+                xhr.upload.addEventListener('progress', (evt) => {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+
+                        $('#movie-progress-bar').text(percentComplete + '%');
+                        $('#movie-progress-bar').width(percentComplete + '%');
+
+                        if (percentComplete === 100) 
+                            $('#movie-progress-bar').html('Done');
+                    }
+                }, false);
+                return xhr;
+            }
+        });
+    }
 });

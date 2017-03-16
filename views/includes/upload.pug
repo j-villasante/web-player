@@ -6,14 +6,38 @@
                     span(aria-hidden='true') ×
                 h4.modal-title Upload
             .modal-body
+                .row 
+                    .col-xs-12 
+                        .form-group
+                            label Title
+                            input#movie-title-input.form-control(type='text', placeholder='Big Example')
+
+                .row 
+                    .col-xs-12 
+                        label Movie
                 .row
-                    .col-xs-12
+                    .col-xs-8
                         .progress
-                            .progress-bar(role='progressbar')
-                        button.btn.btn-lg.upload-btn(type='button') Upload File
-                        input#upload-input.hidden(type='file', name='uploads[]', multiple='multiple')
+                            .progress-bar#movie-progress-bar(role='progressbar')
+                    .col-xs-4
+                        button.btn.btn-primary.upload-movie-btn.btn.pull-right(type='button') Browse
+                        input#upload-movie-input.hidden(type='file')
+
+                .row 
+                    .col-xs-12 
+                        label Subtitle
+                .row
+                    .col-xs-8
+                        .progress
+                            .progress-bar#subtitles-progress-bar(role='progressbar')
+                    .col-xs-4
+                        button.btn.btn-primary.upload-subtitle-btn.btn.pull-right(type='button') Browse
+                        input#upload-subtitle-input.hidden(type='file')
+
             .modal-footer
                 button.btn.btn-default(type='button', data-dismiss='modal') Close
+                button.btn.btn-primary#submit-movie(type='button') Upload movie
+
         // /.modal-content
     // /.modal-dialog
 // /.modal
