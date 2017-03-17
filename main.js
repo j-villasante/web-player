@@ -6,6 +6,7 @@ var passport = require('passport');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var flash = require('connect-flash');
+var compression = require('compression');
 
 var setup = require('./routes');
 
@@ -19,6 +20,7 @@ var controllers = {
 
 var app = express();
 
+app.use(compression());
 app.set('view engine', 'pug');
 
 app.use('/static', express.static('static'));
