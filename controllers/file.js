@@ -24,6 +24,7 @@ function encryptFile(req, res) {
 		const saveTo = path.join(__dirname, '../files/', uniqueFilename);
 		ext = path.extname(filename);
 		const output = fs.createWriteStream(saveTo);
+
 		file.pipe(cipher).pipe(output);
     });
 
@@ -38,11 +39,23 @@ function encryptFile(req, res) {
 
 function decryptFile(req, res) {
 	const decipher = crypto.createDecipher('aes192', req.params.password);
-	const input = fs.createReadStream(path.join(__dirname, '../files/', req.params.filename));
+	const fileurl = path.join(__dirname, '../files/', req.params.filename);
 
-	res.setHeader('Content-disposition', 'attachment; filename=file' + req.params.extension);
+	if (fs.existsSync(fileurl)){
+		const input = fs.createReadStream(fileurl);
 
-	input.pipe(decipher).pipe(res);
+		res.setHeader('Content-disposition', 'attachment; filename=file' + req.params.extension);
+
+		// decipher.on('error', (err) => {
+		// 	res.send('The password provided is wrong', err.message);
+		// });
+
+		input.pipe(decipher).pipe(res);			
+	}
+	else {
+		res.status(404).send('The file does not exists.');
+	}
+	
 }
 
 module.exports = {
