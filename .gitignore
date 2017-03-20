@@ -3,6 +3,7 @@ static/dist
 static/bundle.js
 data
 list.json
+files/*
 
 # Created by https://www.gitignore.io/api/node,sublimetext,windows,macos,linux
 

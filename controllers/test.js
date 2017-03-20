@@ -1,8 +1,8 @@
 'use strict';
 
-var settings = require('../data/data.json');
-var uuid = require('uuid');
-var fs = require('fs');
+const settings = require('../data/data.json');
+const uuid = require('uuid');
+const fs = require('fs');
 const path = require('path');
 
 var movies = settings.movies;

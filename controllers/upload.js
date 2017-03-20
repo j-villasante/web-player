@@ -1,6 +1,6 @@
 'use strict';
 
-const formidable = require('formidable');
+const Busboy = require('busboy');
 const path = require('path');
 const uuid = require('uuid');
 const fs = require('fs');
@@ -27,32 +27,30 @@ function createMovie(req, res) {
 }
 
 function recieveMediaFile(req, res) {
-	var form = new formidable.IncomingForm();
-	form.multiples = false;
+	var busboy = new Busboy(
+        { 
+            headers: req.headers,
+            limits: {
+                files: 1
+            }
+        });
 
-	var id = req.params.id;
-
-	form.uploadDir = path.join(__dirname, '../static/media/', id);
-
-	form.on('file', (name, file) => {
-        var ext = path.extname(file.name);
+    busboy.on('file', function(fieldname, file, filename) {
+        var saveTo = path.join(__dirname, '../static/media/', req.params.id);
+        var ext = path.extname(filename);
         if (ext === '.mp4'){
-            fs.rename(file.path, path.join(form.uploadDir, 'movie.mp4'));
+            file.pipe(fs.createWriteStream(path.join(saveTo, 'movie.mp4')));
         }
         else if (ext === '.vtt') {
-            fs.rename(file.path, path.join(form.uploadDir, 'subtitle.vtt'));
+            file.pipe(fs.createWriteStream(path.join(saveTo, 'subtitle.vtt')));
         }
-	});
+    });
 
-	form.on('error', function(err) {
-    	res.json({ err: err.message });
-  	});
+    busboy.on('finish', function() {
+        res.json({ mes: 'ok'});
+    });
 
-  	form.on('end', function() {
-	    res.json({ mes: 'ok'});
-  	});
-
-  	form.parse(req);
+    req.pipe(busboy);
 }
 
 module.exports = {

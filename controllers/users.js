@@ -1,7 +1,7 @@
 'use strict';
 
-var bcrypt = require('bcrypt');
-var LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcrypt');
+const LocalStrategy = require('passport-local').Strategy;
 
 function showLogin(req, res) {
 	res.render('login', { errors: req.flash('error') });

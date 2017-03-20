@@ -1,12 +1,12 @@
 'use strict';
 
-var express = require('express');
-var bodyParser = require('body-parser');
-var passport = require('passport');
-var cookieParser = require('cookie-parser');
-var session = require('express-session');
-var flash = require('connect-flash');
-var compression = require('compression');
+const express = require('express');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const flash = require('connect-flash');
+const compression = require('compression');
 
 var setup = require('./routes');
 
@@ -15,6 +15,7 @@ var controllers = {
     users: require('./controllers/users.js'),
     importer: require('./controllers/importer.js'),
     upload: require('./controllers/upload.js'),
+    file: require('./controllers/file.js'),
     passport: passport
 };
 

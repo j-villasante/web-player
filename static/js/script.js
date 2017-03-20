@@ -140,19 +140,19 @@ $(() => {
                     var movieOptions = {
                         inputId: '#upload-movie-input',
                         name: 'movie',
-                        id: data.id,
+                        url: '/upload/media/' + data.id,
                         progressbarId: '#movie-progress-bar'
                     };
-                    uploadMedia(movieOptions, cb);
+                    uploadFile(movieOptions, cb);
 
                     if (info.subtitle) {
                         var subtitleOptions = {
                             inputId: '#upload-subtitle-input',
                             name: 'subtitle',
-                            id: data.id,
+                            url: '/upload/media/' + data.id,
                             progressbarId: '#subtitles-progress-bar'
                         };
-                        uploadMedia(subtitleOptions, cb);
+                        uploadFile(subtitleOptions, cb);
                     }                    
                 }
             });
@@ -162,7 +162,7 @@ $(() => {
         }
     });
 
-    function uploadMedia(options, cb){
+    function uploadFile(options, cb){
         var formData = new FormData();
         var files = $(options.inputId).get(0).files;
         for (var i = 0; i < files.length; i++) {
@@ -171,7 +171,7 @@ $(() => {
         }
 
         $.ajax({
-            url: '/upload/media/' + options.id,
+            url: options.url,
             type: 'POST',
             data: formData,
             processData: false,
@@ -196,4 +196,24 @@ $(() => {
             }
         });
     }
+
+    $('#submit-file').click(() => {
+        $('#upload-input').click();
+    });
+
+    $('#upload-input').change(() => {
+        var options = {
+            inputId: '#upload-input',
+            name: 'files',
+            url: '/file/upload',
+            progressbarId: '#progress-bar'
+        };
+
+        uploadFile(options, (data) => {
+            var linkContainer = $('#link-container');
+            linkContainer.removeClass('hidden');
+            linkContainer.find('a').prop('href', data.url);
+        });
+    });
+
 });

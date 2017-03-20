@@ -1,0 +1,24 @@
+doctype html
+html
+    head
+        include includes/head.pug
+    body
+        div.container
+            include includes/navbar.pug
+            .row 
+                .col-xs-6.col-xs-offset-3.text-center
+                    label File upload
+            .row
+                .col-xs-6.col-xs-offset-3
+                    .progress
+                        .progress-bar#progress-bar(role='progressbar')
+            .row
+                .col-xs-6.col-xs-offset-3.text-center
+                    button.btn.btn-primary#submit-file(type='button') Upload
+                    input#upload-input.hidden(type='file')
+            .row
+                .col-xs-6.col-xs-offset-3.text-center#link-container.hidden
+                    br
+                    p The following link contains the name of the file, the extension and the password used for encryption and decryption; and it is not saved anywhere in our servers. You alone are responsible for saving this link!!!
+                    a.btn.btn-default Go to file
+        script(src='/static/bundle.js')

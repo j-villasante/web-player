@@ -1,6 +1,6 @@
 'use strict';
 
-var bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const myPlaintextPassword = 'josue';
 
