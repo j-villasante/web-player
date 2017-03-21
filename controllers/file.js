@@ -44,13 +44,21 @@ function decryptFile(req, res) {
 	if (fs.existsSync(fileurl)){
 		const input = fs.createReadStream(fileurl);
 
-		res.setHeader('Content-disposition', 'attachment; filename=file' + req.params.extension);
+		const chunks = [];
+		var aStream = input.pipe(decipher);
 
-		// decipher.on('error', (err) => {
-		// 	res.send('The password provided is wrong', err.message);
-		// });
+		aStream.on('data', (chunk) => {
+			chunks.push(chunk);
+		});
 
-		input.pipe(decipher).pipe(res);			
+		aStream.on('error', () => {
+			res.send('The password provided is incorrect.');
+		});
+
+		aStream.on('end', () => {
+			res.setHeader('Content-disposition', 'attachment; filename=file' + req.params.extension);
+			res.send(Buffer.concat(chunks));
+		});
 	}
 	else {
 		res.status(404).send('The file does not exists.');
