@@ -15,7 +15,7 @@ function setup(app, controllers){
     },
     controllers.users.saveSession);
 
-    app.use(controllers.users.logged);
+    //app.use(controllers.users.logged);
 
     app.get('/', controllers.movies.renderAll);
     app.get('/watch/:movie', controllers.movies.watch);
@@ -31,6 +31,10 @@ function setup(app, controllers){
     app.get('/file', controllers.file.showUpload);
     app.post('/file/upload', controllers.file.encryptFile);
     app.get('/file/download/:filename/:password/:extension', controllers.file.decryptFile);
+
+    app.get('*', (req, res) => {
+        res.sendFile('views/404page.html', { root: __dirname });
+    });
 }
 
 module.exports = setup;
